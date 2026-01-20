@@ -1,0 +1,68 @@
+@startuml Observer Pattern - Sequence Diagram
+title Observer Pattern - Sequence Diagram
+
+participant Observer1
+participant Observer2
+participant Subject
+
+Note over Subject: Step 1: Two observers register
+
+Observer1 -> Subject: register(observer1)
+activate Subject
+Subject -> Subject: addObserver(observer1)
+deactivate Subject
+
+Observer2 -> Subject: register(observer2)
+activate Subject
+Subject -> Subject: addObserver(observer2)
+deactivate Subject
+
+Note over Subject: Step 2-3: First state change & notification
+
+-> Subject: doSomething()
+activate Subject
+Subject -> Subject: setState(newState)
+Subject -> Observer1: update(newState)
+activate Observer1
+Observer1 -> Observer1: handleUpdate()
+deactivate Observer1
+Subject -> Observer2: update(newState)
+activate Observer2
+Observer2 -> Observer2: handleUpdate()
+deactivate Observer2
+deactivate Subject
+
+Note over Subject: Step 4: Observer1 deregisters
+
+Observer1 -> Subject: unregister(observer1)
+activate Subject
+Subject -> Subject: removeObserver(observer1)
+deactivate Subject
+
+Note over Subject: Step 5-6: Second state change & notification
+
+Observer1 -> Subject: doSomething()
+activate Subject
+Subject -> Subject: setState(newState)
+Subject -> Observer2: update(newState)
+activate Observer2
+Observer2 -> Observer2: handleUpdate()
+deactivate Observer2
+deactivate Subject
+
+Note over Subject: Step 7: Observer2 deregisters
+
+Observer2 -> Subject: unregister(observer2)
+activate Subject
+Subject -> Subject: removeObserver(observer2)
+deactivate Subject
+
+Note over Subject: Step 8: Third state change (no observers)
+
+-> Subject: doSomething()
+activate Subject
+Subject -> Subject: setState(newState)
+Note right of Subject: No observers registered - nothing to notify
+deactivate Subject
+
+@enduml
