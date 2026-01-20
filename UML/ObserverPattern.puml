@@ -41,7 +41,7 @@ deactivate Subject
 
 Note over Subject: Step 5-6: Second state change & notification
 
-Observer1 -> Subject: doSomething()
+-> Subject: doSomething()
 activate Subject
 Subject -> Subject: setState(newState)
 Subject -> Observer2: update(newState)
